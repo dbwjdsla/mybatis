@@ -79,7 +79,7 @@ table.tbl-student tr:last-of-type td:first-child{text-align:center;}
 	</div>
 <script>
 /**
- * 학생정보 삭제
+ * 학생정보 삭제 
  */
 const deleteStudent = () => {
 	const form = $(document.studentUpdateFrm).serialize();
