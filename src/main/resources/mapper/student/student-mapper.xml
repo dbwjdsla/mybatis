@@ -37,14 +37,18 @@
 		from 
 			student 
 	</select>
-	<select id="selectOneStudent" resultType="student">
+	<select id="selectOneStudent" resultMap="studentVoMap">
 		select
-			*
+			no,
+			name,
+			tel,
+			reg_date
 		from
 			student
 		where
 			no = #{no}
 	</select>
+	
 	<!-- 
 		resultMap :
 			컬럼명과 vo필드명이 일치하지않는 경우, mybatis의 자동형변환을 이용할 수 없는 경우
@@ -58,7 +62,42 @@
 		<result column="tel" property="tel" jdbcType="VARCHAR" javaType="string"/>
 		<result column="reg_date" property="regDate" jdbcType="DATE" javaType="java.sql.Date"/>		
 	</resultMap>
-	<update id="updateStudent" parameterType="student">
+	
+	<!--  map키값 재지정 방법1 : ""를 감싸서 별칭을 사용한다.  -->
+	<select id="selectOneStudentMap" resultMap="studentMap">
+		select
+			*
+		from
+			student
+		where
+			no = #{no}
+	</select>
+	<resultMap type="map" id="studentMap">
+		<id column="no" property="no"/>
+		<result column="name" property="name"/>
+		<result column="tel" property="tel"/>
+		<result column="reg_date" property="regDate" javaType="java.sql.Date"/>
+	</resultMap>
+	
+	<select id="selectStudentList" resultType="student">
+		select
+			*
+		from
+			student
+		order by
+			no desc
+	</select>
+	
+	<select id="selectStudentMapList" resultMap="studentMap">
+		select
+			*
+		from
+			student
+		order by
+			no desc
+	</select>
+	
+	<update id="updateStudent">
 		update
 			student
 		set
@@ -73,7 +112,6 @@
 			student
 		where
 			no = #{no}
-			
 	</delete>
 	
 </mapper>

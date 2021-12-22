@@ -34,12 +34,13 @@ public class StudentUpadteController extends AbstractController {
 		
 		//2. 업무로직
 		int result = studentService.updateStudent(student);
-		String msg = result > 0 ? "학생 정보 수정완료!" : "학생 정보 수정실패";
-		request.getSession().setAttribute("msg", msg);
+//		String msg = result > 0 ? "학생 정보 수정완료!" : "학생 정보 수정실패";
+//		request.getSession().setAttribute("msg", msg);
 		
 		
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(msg, response.getWriter());
+//		new Gson().toJson(msg, response.getWriter());
+		new Gson().toJson(result, response.getWriter());
 		
 		return null;
 		

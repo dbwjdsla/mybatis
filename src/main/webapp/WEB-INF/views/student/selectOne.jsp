@@ -90,14 +90,14 @@ const deleteStudent = () => {
 		method : "POST",
 		success(data){
 			console.log(data);
-			alert(data.msg);	
+			alert(data.msg);
 		},
 		error: console.log
 	});
 };
 
 /**
- * 학생정보 수정
+ * 학생정보 수정 - 내가 한거
  */
 const updateStudent = () => {
 	const form = $(document.studentUpdateFrm).serialize();
@@ -108,17 +108,41 @@ const updateStudent = () => {
 		method : "POST",
 		success(data){
 			console.log(data);
-			alert(data.msg);
+			alert(data);
 		},
 		error: console.log
 	});
 };
 
-
 /**
  * 학생1명정보 조회
  */
 $(document.selectOneStudentFrm).submit((e) => {
+	e.preventDefault(); // 폼제출방지
+	
+	const no = $("[name=no]", e.target).val();
+	if(!Number(no)) return;
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/student/selectOneStudentMap.do",
+		data: {no},	// {no : no}
+		success(res){
+			console.log(res.no);
+			$(".tbl-student [name=no]").val(res.no);
+			$(".tbl-student [name=name]").val(res.name);
+			$(".tbl-student [name=tel]").val(res.tel);	
+		},
+		error: console.log
+	})
+	
+	
+});
+
+
+/**
+ * 학생1명정보 조회
+ */
+/* $(document.selectOneStudentFrm).submit((e) => {
 	e.preventDefault(); // 폼제출방지
 	
 	const no = $("[name=no]", e.target).val();
@@ -137,7 +161,7 @@ $(document.selectOneStudentFrm).submit((e) => {
 	})
 	
 	
-});
+}); */
 
 
 /**

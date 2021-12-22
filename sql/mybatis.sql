@@ -23,11 +23,27 @@ values(
 select * from student;
 
 
-select
-    *
-from
-    student
-where
-    no = 3;
+--========================================
+-- web계정에서 kh계정의 일부테이블 사용하기
+--========================================
+select * from kh.employee;
+select * from kh.department;
+select * from kh.job;
 
-commit;
+--kh계정 권한부여
+grant select on kh.employee to web;
+grant select on kh.department to web;
+grant select on kh.job to web;
+
+-- synonym 동의어객체
+-- 별칭객체
+-- create synonym은 resource롤에 포함되지 않는 권한
+create synonym emp for kh.employee;
+
+-- system 계정
+grant create synonym to web;
+
+-- 조회
+select * from emp;
+select * from dept;
+select * from job;
