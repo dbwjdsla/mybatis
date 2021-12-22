@@ -28,20 +28,20 @@ div#search-container{
 <body>
 <div id="emp-container">
 	<h2>사원정보 </h2>
-<div id="search-container">
-	<form name="empSearchFrm">
-		<select name="searchType" required>
-			<option value="">검색타입</option>
-			<!-- required여부를 판단할 value="" 반드시 있어야함.-->
-			<option value="emp_id">사번</option>
-			<option value="emp_name">사원명</option>
-			<option value="email">이메일</option>
-			<option value="phone">전화번호</option>
-		</select>
-		<input type="search" name="searchKeyword" required/>	
-		<input type="submit" value="검색" />
-	</form>
-</div>
+	<div id="search-container">
+		<form name="empSearchFrm">
+			<select name="searchType" required>
+				<option value="">검색타입</option>
+				<!-- required여부를 판단할 value="" 반드시 있어야함.-->
+				<option value="emp_id" <c:if test="${'emp_id' eq param.searchType}">selected</c:if>>사번</option>
+				<option value="emp_name" ${'emp_name' eq param.searchType? "selected" : ""}>사원명</option>
+				<option value="email" ${'email' eq param.searchType? "selected" : ""}>이메일</option>
+				<option value="phone" ${'phone' eq param.searchType? "selected" : ""}>전화번호</option>
+			</select>
+			<input type="search" name="searchKeyword" value="${param.searchKeyword}" required/>	
+			<input type="submit" value="검색" />
+		</form>
+	</div>
 
 	<table class="tbl-emp">
 		<thead>
@@ -68,9 +68,9 @@ div#search-container{
 				<c:forEach items="${list}" var="emp" varStatus="vs">
 					<tr>
 						<td>${vs.count}</td>
-						<td>${emp.id}</td>
-						<td>${emp.name}</td>
-						<td>${fn:substring(emp.no, 0, 8)}******</td>
+						<td>${emp.empId}</td>
+						<td>${emp.empName}</td>
+						<td>${fn:substring(emp.empNo, 0, 8)}******</td>
 						<td>${emp.email}</td>
 						<td>${emp.phone}</td>
 						<td>${emp.deptCode}</td>
@@ -84,7 +84,11 @@ div#search-container{
 					</tr>
 				</c:forEach>
 			</c:if>
-			<c:if test="${empty list}"></c:if>
+			<c:if test="${empty list}">
+				<tr>
+					<td colspan="14">검색결과가 존재하지 않습니다.</td>
+				</tr>	
+			</c:if>
 		</tbody>
 	</table>
 </div>
